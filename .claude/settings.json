@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -noE 'sc-if value=\"\\\\{\\\\{ show[A-Za-z]+ \\\\}\\\\}\"|</sc-if>|<div class=\"work-grid\"|<!-- EXPERIENCE -->|<div class=\"skills-folders\"|<div class=\"skfolder skcards\"|class=\"skcard\"|class=\"skfolder\"' __TRACKED_VAR__/dissolve_new.html)"
+    ]
+  }
+}

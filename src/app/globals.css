@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafafa;
+  --foreground: #0a0a0a;
 }
 
 @theme inline {
@@ -15,12 +15,378 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #fafafa;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
+
+::selection {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* ---- Voice orb avatar (Dissolve Avatar) ------------------------------- */
+@keyframes micRing {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.9);
+    opacity: 0;
+  }
+}
+@keyframes barPulse {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes wordIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes invitePulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+}
+@keyframes overlayFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes tileIn {
+  from {
+    transform: translateY(22px) scale(0.98);
+  }
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Overlay cards: staggered pop-in + gentle float (from the design) */
+@keyframes popT {
+  0% {
+    opacity: 0;
+    scale: 0.68;
+    translate: 0 40px;
+  }
+  62% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+  }
+}
+@keyframes floatT {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+@keyframes wbob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -7px;
+  }
+}
+@keyframes msgIn {
+  from {
+    opacity: 0;
+    transform: translateY(9px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes toastDot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.55;
+  }
+}
+.ovc {
+  animation:
+    popT 0.62s cubic-bezier(0.22, 1, 0.36, 1) backwards,
+    floatT 7s ease-in-out infinite;
+  will-change: translate, scale;
+}
+.ovc:nth-of-type(1) {
+  animation-delay: 0.05s, 0.7s;
+  animation-duration: 0.62s, 6.4s;
+}
+.ovc:nth-of-type(2) {
+  animation-delay: 0.15s, 1.05s;
+  animation-duration: 0.62s, 7.6s;
+}
+.ovc:nth-of-type(3) {
+  animation-delay: 0.25s, 1.4s;
+  animation-duration: 0.62s, 6.9s;
+}
+.ovc:nth-of-type(4) {
+  animation-delay: 0.35s, 1.75s;
+  animation-duration: 0.62s, 8.1s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ovc {
+    animation: popT 0.4s ease backwards;
+  }
+}
+
+/* Work cards: floating satellite mini-cards + interactive toolkit tags */
+.wsat1 {
+  animation: wbob 4.8s ease-in-out infinite;
+}
+.wsat2 {
+  animation: wbob 5.8s ease-in-out infinite 0.5s;
+}
+.wsat3 {
+  animation: wbob 6.6s ease-in-out infinite 0.9s;
+}
+.ovc:hover .wsat1,
+.ovc:hover .wsat2,
+.ovc:hover .wsat3 {
+  animation-play-state: paused;
+}
+.wtags > span {
+  transition:
+    transform 0.16s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.wtags > span:hover {
+  transform: translateY(-3px);
+  background: rgba(124, 92, 255, 0.24) !important;
+  border-color: rgba(124, 92, 255, 0.5) !important;
+  color: #3a2f6a !important;
+}
+
+/* Skills / Stack folders: contents fan out of the folder on hover */
+.skfan .pk {
+  transition:
+    transform 0.52s cubic-bezier(0.2, 0.85, 0.25, 1),
+    filter 0.4s ease;
+  transform: translate(var(--rx, 0), var(--ry, 0)) rotate(var(--rr, 0));
+  will-change: transform;
+}
+.skfan:hover .pk {
+  transform: translate(var(--hx, 0), var(--hy, 0)) rotate(var(--hr, 0));
+  filter: drop-shadow(0 18px 24px rgba(30, 40, 90, 0.22));
+}
+@media (hover: none) {
+  .skfan .pk {
+    transform: translate(var(--hx, 0), var(--hy, 0)) rotate(var(--hr, 0));
+  }
+}
+/* Skills cards tuck into the folder, pop out on folder-hover */
+.skcard {
+  position: absolute;
+  left: 50%;
+  top: 22px;
+  width: 184px;
+  margin-left: -92px;
+  transform-origin: 50% 100%;
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.85, 0.25, 1),
+    box-shadow 0.3s;
+  transform: translateY(34px) rotate(var(--rot)) scale(0.94);
+  z-index: var(--z);
+}
+.skcards:hover .skcard {
+  transform: translateX(var(--tx)) translateY(-18px) rotate(var(--rot)) scale(1);
+  z-index: calc(20 + var(--z));
+}
+.skcards .skcard:hover {
+  transform: translateX(var(--tx)) translateY(-30px) rotate(0deg) scale(1.06);
+  z-index: 41;
+  box-shadow: 0 30px 55px rgba(40, 50, 100, 0.28);
+}
+@media (hover: none) {
+  .skcards .skcard {
+    transform: translateX(var(--tx)) translateY(-14px) rotate(var(--rot));
+    z-index: calc(20 + var(--z));
+  }
+  .skcards .skcard:active {
+    transform: translateX(var(--tx)) translateY(-30px) rotate(0deg) scale(1.06);
+    z-index: 41;
+  }
+}
+
+/* Experience board reflows to a vertical stack on tablets/phones */
+@media (max-width: 719px) {
+  .exp-board {
+    width: 100% !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column;
+    gap: 20px;
+    padding: 6px 0 2px;
+  }
+  .exp-links {
+    display: none !important;
+  }
+  .exp-note {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    transform: rotate(0deg) !important;
+  }
+}
+
+/* Overlay grids collapse to a single column on phones */
+@media (max-width: 640px) {
+  .ov-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .work-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .skills-folders {
+    gap: 150px !important;
+    padding-top: 160px !important;
+  }
+}
+
+/* ================================================================= */
+/* Mobile layout (Dissolve Avatar Mobile) — full-bleed phone app.    */
+/* Tap-to-fan skills/stack; scoped to .mskf so desktop is untouched. */
+/* ================================================================= */
+@keyframes appPop {
+  from {
+    transform: translateY(18px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes micRingM {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.75);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.75);
+    opacity: 0;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Hide scrollbars on the phone scroll surfaces */
+.mscroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+.mscroll {
+  scrollbar-width: none;
+}
+/* Skills / Stack folders — tap to fan (scoped to .mskf, isolated from desktop) */
+.mskf {
+  position: relative;
+  width: 264px;
+  max-width: 100%;
+  height: 248px;
+  margin: 0 auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.mskf .skcard {
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  width: 150px;
+  margin-left: -75px;
+  transform-origin: 50% 100%;
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.85, 0.25, 1),
+    box-shadow 0.3s;
+  transform: translateY(28px) rotate(var(--rot)) scale(0.9);
+  z-index: var(--z);
+}
+.mskf.open .skcard {
+  transform: translateX(var(--tx)) translateY(-10px) rotate(var(--rot)) scale(0.94);
+  z-index: calc(20 + var(--z));
+  box-shadow: 0 20px 42px rgba(40, 50, 100, 0.24);
+}
+.mskf.open[data-active="1"] .skcard:nth-child(1),
+.mskf.open[data-active="2"] .skcard:nth-child(2),
+.mskf.open[data-active="3"] .skcard:nth-child(3) {
+  transform: translateX(var(--tx)) translateY(-24px) rotate(0deg) scale(1.05);
+  z-index: 50;
+  box-shadow: 0 30px 58px rgba(40, 50, 100, 0.32);
+}
+.mskf .pk {
+  transition:
+    transform 0.52s cubic-bezier(0.2, 0.85, 0.25, 1),
+    filter 0.4s ease;
+  transform: translate(var(--rx, 0), var(--ry, 0)) rotate(var(--rr, 0));
+}
+.mskf.open .pk {
+  transform: translate(var(--hx, 0), var(--hy, 0)) rotate(var(--hr, 0));
+  filter: drop-shadow(0 18px 24px rgba(30, 40, 90, 0.22));
+}
+.folder-btn {
+  transition: transform 0.2s;
+}
+.folder-btn:active {
+  transform: translateY(-5px);
+}
+
+/* mobile: mic ring centered */

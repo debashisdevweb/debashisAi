@@ -2,7 +2,37 @@
   "permissions": {
     "allow": [
       "Bash(npm --version)",
-      "Bash(npx *)"
+      "Bash(npx *)",
+      "Bash(npm run *)",
+      "Bash(npm install *)",
+      "Bash(npm ls *)",
+      "Bash(node -e \"try{const r=require\\('ai/react'\\);console.log\\(Object.keys\\(r\\)\\)}catch\\(e\\){console.log\\('ai/react not available:', e.code\\)}\")",
+      "Bash(node -e \"const p=require\\('./node_modules/ai/package.json'\\); console.log\\(Object.keys\\(p.exports||{}\\)\\)\")",
+      "Bash(node -e \"import\\('ai'\\).then\\(m=>console.log\\('useChat in ai:', typeof m.useChat\\)\\).catch\\(e=>console.log\\(e.message\\)\\)\")",
+      "Bash(curl -s -o /dev/null -w \"GET / -> %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"dev server: HTTP %{http_code}\\\\n\" --max-time 5 http://localhost:3000/)",
+      "Bash(lsof -ti:3000)",
+      "Bash(xargs kill -9)",
+      "Bash(node -e ' *)",
+      "Bash(sed -i '' 's#toolu_01Ta5QPP8JDcEXp7WbCdJLCq.txt#toolu_01RdYGn6ihwXHpeGkQg51EP5.txt#' /private/tmp/claude-501/-Users-debashisroy-Documents-Projects-portfolio-chatbot/f13df04c-e91a-4105-a29b-002c3210be5b/scratchpad/extract3.js)",
+      "Bash(node /private/tmp/claude-501/-Users-debashisroy-Documents-Projects-portfolio-chatbot/f13df04c-e91a-4105-a29b-002c3210be5b/scratchpad/extract3.js)",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/uploads/Figma-logo.svg)",
+      "Bash(echo \"GET /uploads/Figma-logo.svg -> $\\(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/uploads/Figma-logo.svg\\)\")",
+      "Bash(echo \"GET / -> $\\(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/\\)\")",
+      "Bash(curl -s \"http://localhost:3000/_next/static/chunks/%5Broot-of-the-server%5D__04kpziu._.css\")",
+      "Bash(python3 -c \"import sys; s=sys.stdin.read\\(\\); i=s.find\\('micRingM'\\); print\\(s[i-14:i+230] if i>=0 else 'NOT FOUND'\\)\")",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' -X POST http://localhost:3000/api/transcribe)",
+      "Bash(echo \"POST /api/transcribe \\(empty\\) -> $\\(curl -s -o /dev/null -w '%{http_code}' -X POST http://localhost:3000/api/transcribe\\)\")",
+      "Bash(node -e \"console.log\\(require\\('./package.json'\\).scripts\\)\")",
+      "Bash(node -e \"console.log\\(require\\('./package.json'\\).dependencies.next\\)\")",
+      "Bash(ipconfig getifaddr *)",
+      "Bash(cloudflared --version)",
+      "Bash(rm -f /tmp/cf-tunnel.log)",
+      "Bash(cloudflared tunnel *)",
+      "Bash(echo \"started pid $!\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" --max-time 10 https://ton-louisville-sequences-bradley.trycloudflare.com/)",
+      "Bash(curl -s -X POST http://localhost:3000/api/chat -H 'Content-Type: application/json' -d '{\"messages\":[{\"id\":\"user-0\",\"role\":\"user\",\"parts\":[{\"type\":\"text\",\"text\":\"How can I reach you?\"}]}]}' --max-time 25)",
+      "Bash(git check-ignore *)"
     ]
   }
 }
