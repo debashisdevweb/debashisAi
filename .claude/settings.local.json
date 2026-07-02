@@ -32,7 +32,9 @@
       "Bash(echo \"started pid $!\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" --max-time 10 https://ton-louisville-sequences-bradley.trycloudflare.com/)",
       "Bash(curl -s -X POST http://localhost:3000/api/chat -H 'Content-Type: application/json' -d '{\"messages\":[{\"id\":\"user-0\",\"role\":\"user\",\"parts\":[{\"type\":\"text\",\"text\":\"How can I reach you?\"}]}]}' --max-time 25)",
-      "Bash(git check-ignore *)"
+      "Bash(git check-ignore *)",
+      "Bash(echo \"=== exit: $? \\(28=timeout/hang\\) ===\")",
+      "Bash(time curl -s -X POST http://localhost:3000/api/chat -H 'Content-Type: application/json' -d '{\"messages\":[{\"id\":\"u0\",\"role\":\"user\",\"parts\":[{\"type\":\"text\",\"text\":\"who are you?\"}]}]}' --max-time 30)"
     ]
   }
 }

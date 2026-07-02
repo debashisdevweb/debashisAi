@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     return new Response(
       JSON.stringify({
         error:
-          "Missing GOOGLE_CHAT_API_KEY / GOOGLE_GENERATIVE_AI_API_KEY. Add one to .env.local and restart the dev server.",
+          "Some internal Issue .",
       }),
       { status: 500, headers: { "Content-Type": "application/json" } },
     );
@@ -64,7 +64,18 @@ export async function POST(req: Request) {
     model: google("gemini-2.5-flash"),
     system: SYSTEM_PROMPT,
     messages: await convertToModelMessages(messages),
+    // Disable Gemini 2.5 "thinking": this is a voice assistant that must answer
+    // in under 3 sentences, and thinking delays the first token long enough to
+    // blow past serverless function timeouts (→ empty stream on the client).
+    providerOptions: {
+      google: { thinkingConfig: { thinkingBudget: 0 } },
+    },
   });
 
-  return result.toUIMessageStreamResponse();
+  return result.toUIMessageStreamResponse({
+    onError: (error) => {
+      console.error("[chat] stream error:", error);
+      return "I'm having trouble responding right now. Try me again?";
+    },
+  });
 }
